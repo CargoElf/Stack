@@ -27,6 +27,23 @@ RSpec.describe Stack do
       set_stack.pop
       expect(stack.pop).to eq 2
     end
+
+    it "Returns nil if nothing in stack" do
+      expect(Stack.new.pop).to eq nil
+    end
+
+    it "Returns the last element if there is only one in stack" do
+      one_stack = Stack.new
+      one_stack.push(10)
+      expect(one_stack.pop).to eq 10
+    end
+
+    it "Removes the last element if there is only one in stack" do
+      one_stack = Stack.new
+      one_stack.push(10)
+      one_stack.pop
+      expect(one_stack.empty?).to be true
+    end
   end
 
   describe "Top" do
@@ -37,6 +54,10 @@ RSpec.describe Stack do
     it "Doesn't remove the top element" do
       set_stack.top
       expect(set_stack.top).to eq 3
+    end
+
+    it "Returns nil if empty" do
+      expect(Stack.new.top).to eq nil
     end
   end
 
