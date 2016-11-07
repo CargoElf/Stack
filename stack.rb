@@ -25,7 +25,11 @@ class Stack
   end
 
   def empty?
-    @entire_stack
+    if @entire_stack
+      false
+    else
+      true
+    end
   end
 
 end
