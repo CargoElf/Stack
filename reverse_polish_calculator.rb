@@ -24,49 +24,26 @@ class ReversePolishCalculator
 
   def symbol_check(character)
     if /[*+-\/]/.match(character)
-      case character
-      when "+" then addition
-      when "-" then subtraction
-      when "/" then division
-      when "*" then multiplication
-      end
+      math_operation(character)
     end
   end
 
-  def addition
-    p "Add"
-    second = @stack.pop
-    first = @stack.pop
-    raise NotEnoughValues.new, "Not enough values!" if check_stack(first, second)
-    @stack.push(first + second)
+  def math_operation(op)
+    numbers = pop_two
+    @stack.push(numbers[0].send(op, numbers[1]))
   end
 
-  def subtraction
-    p "Subtract"
-    second = @stack.pop
-    first = @stack.pop
-    raise NotEnoughValues.new, "Not enough values!" if check_stack(first, second)
-    @stack.push(first - second)
-  end
-
-  def division
-    p "Divide"
-    second = @stack.pop
-    first = @stack.pop
-    raise NotEnoughValues.new, "Not enough values!" if check_stack(first, second)
-    @stack.push(first / second)
-  end
-
-  def multiplication
-    p "Multiply"
-    p second = @stack.pop
-    p first = @stack.pop
-    raise NotEnoughValues.new, "Not enough values!" if check_stack(first, second)
-    @stack.push(first * second)
-  end
+  private
 
   def check_stack(first, second)
     first == nil || second == nil
+  end
+
+  def pop_two
+    second = @stack.pop
+    first = @stack.pop
+    raise NotEnoughValues.new, "Not enough values!" if check_stack(first, second)
+    return [first, second]
   end
 end
 
