@@ -27,4 +27,8 @@ RSpec.describe ReversePolishCalculator do
   it "Returns error when there's too few on the stack" do
     expect{ calc.run("1 +") }.to raise_error(NotEnoughValues)
   end
+
+  it "Returns error when there's many on the stack" do
+    expect{ calc.run("7 5 1 2 + 4 * + 3 -") }.to raise_error(TooManyValues)
+  end
 end

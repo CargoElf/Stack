@@ -4,10 +4,12 @@ class ReversePolishCalculator
 
   def initialize
     @stack = Stack.new
+    @size = 0
   end
 
   def run(input)
     input = input.split(" ").to_a if input.is_a? String
+    raise TooManyValues.new, "Too many values" if input == [] && @size > 1
     return @stack.pop if input == []
     character = input.slice!(0)
     number_check(character)
@@ -17,6 +19,7 @@ class ReversePolishCalculator
   def number_check(character)
     if /\A\d+\z/.match(character)
       @stack.push(character.to_i)
+      increment_size
     else
       symbol_check(character)
     end
@@ -29,11 +32,20 @@ class ReversePolishCalculator
   end
 
   def math_operation(op)
+    decriment_size
     numbers = pop_two
     @stack.push(numbers[0].send(op, numbers[1]))
   end
 
   private
+
+  def increment_size
+    @size += 1
+  end
+
+  def decriment_size
+    @size -= 1
+  end
 
   def check_stack(first, second)
     first == nil || second == nil
@@ -48,6 +60,9 @@ class ReversePolishCalculator
 end
 
 class NotEnoughValues < StandardError
+end
+
+class TooManyValues < StandardError
 end
 
 # While there are input tokens left
