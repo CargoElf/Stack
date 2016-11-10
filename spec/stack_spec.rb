@@ -1,4 +1,3 @@
-require_relative "../node"
 require_relative "../stack"
 
 RSpec.describe Stack do
